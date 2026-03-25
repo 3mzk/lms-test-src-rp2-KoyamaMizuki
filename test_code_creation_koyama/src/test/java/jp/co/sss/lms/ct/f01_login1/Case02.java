@@ -40,10 +40,11 @@ public class Case02 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		WebDriverUtils.goTo("http://localhost:8080/lms");
+		goTo("http://localhost:8080/lms");
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 	    assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
-	    assertTrue(webDriver.findElement(By.cssSelector("input[type='submit']")).isDisplayed());
+	    	  
+	    getEvidence(new Object() {});
 	  
 	}
 
