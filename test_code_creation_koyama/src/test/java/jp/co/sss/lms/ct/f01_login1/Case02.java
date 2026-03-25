@@ -46,6 +46,8 @@ public class Case02 {
 	    	  
 	    getEvidence(new Object() {});
 	  
+	    
+	    
 	}
 
 	@Test
