@@ -3,8 +3,6 @@ package jp.co.sss.lms.ct.f01_login1;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.Duration;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 /**
@@ -53,19 +49,19 @@ public class Case03 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
+		// ログイン情報の入力
 		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA01");
 		webDriver.findElement(By.id("password")).sendKeys("StudentAA00");
 		webDriver.findElement(By.cssSelector("input[type='submit']")).click();
 
 		//待機処理
-		WebDriverWait wait = new WebDriverWait(webDriver,Duration.ofSeconds(5));
-	
-		wait.until(ExpectedConditions.titleIs("コース詳細 | LMS"));
+		visibilityTimeout(By.cssSelector("h2"), 5);
 
 		//画面タイトル確認
 		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
 		assertTrue(webDriver.findElement(By.cssSelector("li.active")).isDisplayed());
+		
 		//遷移後の画面でメッセージを確認
 		WebElement msg =webDriver.findElement(By.cssSelector("small"));
         assertTrue(msg.getText().contains("ようこそ"));
