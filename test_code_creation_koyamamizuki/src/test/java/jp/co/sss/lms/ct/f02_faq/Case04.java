@@ -86,8 +86,8 @@ public class Case04 {
 		assertEquals("ヘルプ | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
 
-		getEvidence(new Object() {});
-
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -113,7 +113,8 @@ public class Case04 {
 		assertEquals("よくある質問 | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
 		
-		getEvidence(new Object() {});
+		getEvidence(new Object() {
+		});
 		
 	}
 	
