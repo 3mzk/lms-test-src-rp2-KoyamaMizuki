@@ -42,7 +42,8 @@ public class Case03 {
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 	    assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
 	    	  
-	    getEvidence(new Object() {});
+	    getEvidence(new Object() {
+	    });
 	}
 
 	@Test
@@ -66,7 +67,8 @@ public class Case03 {
 		WebElement msg =webDriver.findElement(By.cssSelector("small"));
         assertTrue(msg.getText().contains("ようこそ"));
         
-        getEvidence(new Object() {});
+        getEvidence(new Object() {
+        });
 	}
 
 }
