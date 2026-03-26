@@ -13,8 +13,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import jp.co.sss.lms.ct.util.WebDriverUtils;
-
 /**
  * 結合テスト ログイン機能①
  * ケース02
@@ -52,16 +50,16 @@ public class Case02 {
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
-		WebDriverUtils.webDriver.findElement(By.id("loginId")).sendKeys("StudentAA99");
-		WebDriverUtils.webDriver.findElement(By.id("password")).sendKeys("StudentAA99");
+		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA99");
+		webDriver.findElement(By.id("password")).sendKeys("StudentAA99");
 
-		WebDriverUtils.webDriver.findElement(By.cssSelector("input[type='submit']")).click();
+		webDriver.findElement(By.cssSelector("input[type='submit']")).click();
 		
-		WebElement errorMsg = WebDriverUtils.webDriver.findElement(By.cssSelector(".help-inline.error"));
+		WebElement errorMsg = webDriver.findElement(By.cssSelector(".help-inline.error"));
 		
 		assertTrue(errorMsg.isDisplayed(), "エラーメッセージが表示されている必要があります");
 		assertEquals("* ログインに失敗しました。", errorMsg.getText());
-		assertEquals("ログイン | LMS", WebDriverUtils.webDriver.getTitle());
+		assertEquals("ログイン | LMS", webDriver.getTitle());
 		
 		getEvidence(new Object() {});
 	}
