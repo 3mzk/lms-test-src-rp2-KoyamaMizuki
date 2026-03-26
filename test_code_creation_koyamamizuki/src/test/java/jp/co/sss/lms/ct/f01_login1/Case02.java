@@ -45,8 +45,6 @@ public class Case02 {
 	    assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
 	    	  
 	    getEvidence(new Object() {});
-	  
-	    
 	    
 	}
 
