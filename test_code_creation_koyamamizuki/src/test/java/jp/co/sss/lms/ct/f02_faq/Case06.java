@@ -42,6 +42,8 @@ public class Case06 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo("http://localhost:8080/lms");
+		
+		// ログイン画面の検証
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
 		
@@ -85,9 +87,8 @@ public class Case06 {
 		// ヘルプ画面に遷移するまでの待機処理
 		visibilityTimeout(By.cssSelector("h2"), 5);
 
-		// 画面タイトル検証
+		// ヘルプ画面の検証
 		assertEquals("ヘルプ | LMS", webDriver.getTitle());
-		//URL 検証
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
@@ -115,7 +116,7 @@ public class Case06 {
 
 		// 画面タイトル検証
 		assertEquals("よくある質問 | LMS", webDriver.getTitle());
-		//URL 検証
+		// URL 検証
 		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
@@ -126,20 +127,20 @@ public class Case06 {
 	@Order(5)
 	@DisplayName("テスト05 カテゴリ検索で該当カテゴリの検索結果だけ表示")
 	void test05() {
-		// 研修関係でカテゴリ検索
+		// カテゴリ「研修関係」で検索
 		webDriver.findElement(By.cssSelector("a[href='/lms/faq?frequentlyAskedQuestionCategoryId=1']"))
 				.click();
 
 		WebElement result = webDriver.findElement(By.cssSelector("dt.mb10"));
 
-		// 該当箇所にスクロール
+		// 該当箇所までスクロール
 		((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", result);
 
 		// 検索結果を検証
 		assertTrue(webDriver.getCurrentUrl().contains("frequentlyAskedQuestionCategoryId=1"));
 		List<WebElement> searchResultElements = webDriver.findElements(By.xpath("//dt[contains(@class,'mb10')]"));
 
-		// テキスト検証
+		// 検索結果の内容検証
 		assertEquals("Q.キャンセル料・途中退校について", searchResultElements.get(0).getText());
 		assertEquals("Q.研修の申し込みはどのようにすれば良いですか？", searchResultElements.get(1).getText());
 

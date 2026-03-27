@@ -39,10 +39,12 @@ public class Case02 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo("http://localhost:8080/lms");
+		// ログイン画面の検証
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 	    assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
-	    	  
-	    getEvidence(new Object() {});
+	    // エビデンス取得	  
+	    getEvidence(new Object() {
+	    });
 	    
 	}
 
@@ -50,13 +52,13 @@ public class Case02 {
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
+		// ログイン情報を入力
 		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA99");
 		webDriver.findElement(By.id("password")).sendKeys("StudentAA99");
-
 		webDriver.findElement(By.cssSelector("input[type='submit']")).click();
 		
-		WebElement errorMsg = webDriver.findElement(By.cssSelector(".help-inline.error"));
-		
+		// エラーメッセージの検証
+		WebElement errorMsg = webDriver.findElement(By.cssSelector(".help-inline.error")); 
 		assertTrue(errorMsg.isDisplayed(), "エラーメッセージが表示されている必要があります");
 		assertEquals("* ログインに失敗しました。", errorMsg.getText());
 		assertEquals("ログイン | LMS", webDriver.getTitle());

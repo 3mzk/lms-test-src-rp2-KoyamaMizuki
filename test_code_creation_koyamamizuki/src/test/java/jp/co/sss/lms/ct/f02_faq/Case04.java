@@ -39,11 +39,12 @@ public class Case04 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo("http://localhost:8080/lms");
+		// ログイン画面の検証
 		assertEquals("ログイン | LMS", webDriver.getTitle());
-		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
-
-		getEvidence(new Object() {
-		});
+	    assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
+	    // エビデンス取得	  
+	    getEvidence(new Object() {
+	    });
 	}
 
 	@Test
@@ -55,15 +56,15 @@ public class Case04 {
 		webDriver.findElement(By.id("password")).sendKeys("StudentAA00");
 		webDriver.findElement(By.cssSelector("input[type='submit']")).click();
 		
-		//待機処理
+		// 待機処理
 		visibilityTimeout(By.cssSelector("h2"), 5);
 
-		//画面タイトル確認
+		// コース詳細画面の検証
 		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/course/detail", webDriver.getCurrentUrl());
 		assertTrue(webDriver.findElement(By.cssSelector("li.active")).isDisplayed());
 		
-		//遷移後の画面でメッセージを確認
+		// ログイン後のメッセージを検証
 		WebElement msg = webDriver.findElement(By.cssSelector("small"));
 		assertTrue(msg.getText().contains("ようこそ"));
 
@@ -82,7 +83,7 @@ public class Case04 {
 		// ヘルプ画面に遷移するまでの待機処理
 		visibilityTimeout(By.cssSelector("h2"), 5);
 		
-		// 画面タイトル検証
+		// ヘルプ画面の検証
 		assertEquals("ヘルプ | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
 
@@ -109,7 +110,7 @@ public class Case04 {
 	    // 別タブ表示の待機処理
 	    visibilityTimeout(By.cssSelector("h2"), 5);
 	    
-		// 画面タイトル検証
+		// よくある質問画面の検証
 		assertEquals("よくある質問 | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
 		

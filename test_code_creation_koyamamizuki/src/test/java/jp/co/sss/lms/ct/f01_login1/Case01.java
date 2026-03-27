@@ -37,10 +37,12 @@ public class Case01 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo("http://localhost:8080/lms");
+		// ログイン画面の検証
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 	    assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
-	    
-	    getEvidence(new Object() {});
+	    // エビデンス取得
+	    getEvidence(new Object() {
+	    });
 	}
 
 }
