@@ -3,6 +3,8 @@ package jp.co.sss.lms.ct.f02_faq;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +44,8 @@ public class Case06 {
 		goTo("http://localhost:8080/lms");
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
-
+		
+		// エビデンス取得
 		getEvidence(new Object() {
 		});
 	}
@@ -84,6 +87,7 @@ public class Case06 {
 
 		// 画面タイトル検証
 		assertEquals("ヘルプ | LMS", webDriver.getTitle());
+		//URL 検証
 		assertEquals("http://localhost:8080/lms/help", webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
@@ -111,6 +115,7 @@ public class Case06 {
 
 		// 画面タイトル検証
 		assertEquals("よくある質問 | LMS", webDriver.getTitle());
+		//URL 検証
 		assertEquals("http://localhost:8080/lms/faq", webDriver.getCurrentUrl());
 
 		getEvidence(new Object() {
@@ -124,6 +129,7 @@ public class Case06 {
 		// 研修関係でカテゴリ検索
 		webDriver.findElement(By.cssSelector("a[href='/lms/faq?frequentlyAskedQuestionCategoryId=1']"))
 				.click();
+
 		WebElement result = webDriver.findElement(By.cssSelector("dt.mb10"));
 
 		// 該当箇所にスクロール
@@ -131,6 +137,11 @@ public class Case06 {
 
 		// 検索結果を検証
 		assertTrue(webDriver.getCurrentUrl().contains("frequentlyAskedQuestionCategoryId=1"));
+		List<WebElement> searchResultElements = webDriver.findElements(By.xpath("//dt[contains(@class,'mb10')]"));
+
+		// テキスト検証
+		assertEquals("Q.キャンセル料・途中退校について", searchResultElements.get(0).getText());
+		assertEquals("Q.研修の申し込みはどのようにすれば良いですか？", searchResultElements.get(1).getText());
 
 		getEvidence(new Object() {
 		});
@@ -140,7 +151,9 @@ public class Case06 {
 	@Order(6)
 	@DisplayName("テスト06 検索結果の質問をクリックしその回答を表示")
 	void test06() {
-		WebElement question = webDriver.findElement(By.cssSelector("dt.mb10"));
+		WebElement question = webDriver.findElement(
+				By.xpath("//dt[contains(normalize-space(.),'キャンセル料・途中退校について')]"));
+
 		// 該当箇所にスクロール
 		((JavascriptExecutor) webDriver)
 				.executeScript("arguments[0].scrollIntoView(true);", question);
@@ -148,8 +161,12 @@ public class Case06 {
 		// 検索結果の質問をクリック
 		question.click();
 
+		WebElement answer = webDriver.findElement(
+				By.xpath("//dd[contains(text(),'受講者の退職や解雇等')]"));
+
 		// 回答を検証
-		assertTrue(webDriver.findElement(By.cssSelector("dd[id^='answer-h']")).isDisplayed());
+		String expected = "A. 受講者の退職や解雇等、やむを得ない事情による途中終了に関してなど、事情をお伺いした上で、協議という形を取らせて頂きます。 弊社営業担当までご相談下さい";
+		assertTrue(answer.getText().contains(expected));
 
 		getEvidence(new Object() {
 		});
