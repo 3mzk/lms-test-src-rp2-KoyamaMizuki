@@ -42,7 +42,8 @@ public class Case05 {
 		goTo("http://localhost:8080/lms");
 		assertEquals("ログイン | LMS", webDriver.getTitle());
 		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
-
+		
+		// エビデンス取得
 		getEvidence(new Object() {
 		});
 	}
@@ -135,7 +136,7 @@ public class Case05 {
 		.executeScript("arguments[0].scrollIntoView(true);", result);
 		
 		// 検索結果を検証
-		assertTrue(result.getText().contains("キャンセル料"));
+		assertTrue(result.getText().contains("Q.キャンセル料・途中退校について"));
 
 		getEvidence(new Object() {
 		});
