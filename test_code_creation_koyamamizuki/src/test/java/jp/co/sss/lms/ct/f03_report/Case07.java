@@ -42,10 +42,10 @@ public class Case07 {
 		goTo("http://localhost:8080/lms");
 		// ログイン画面の検証
 		assertEquals("ログイン | LMS", webDriver.getTitle());
-	    assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
-	    // エビデンス取得	  
-	    getEvidence(new Object() {
-	    });
+		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
+		// エビデンス取得	  
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class Case07 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// ログイン情報の入力
-		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA01");
+		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA02");
 		webDriver.findElement(By.id("password")).sendKeys("StudentAA00");
 		webDriver.findElement(By.cssSelector("input[type='submit']")).click();
 
@@ -69,8 +69,8 @@ public class Case07 {
 		WebElement msg = webDriver.findElement(By.cssSelector("small"));
 		assertTrue(msg.getText().contains("ようこそ"));
 
-		getEvidence(new Object() {
-		});
+		//		getEvidence(new Object() {
+		//		});
 	}
 
 	@Test
@@ -82,16 +82,17 @@ public class Case07 {
 				By.xpath("//tr[.//span[contains(text(), '未提出')]]"));
 		// 該当箇所にスクロール
 		((JavascriptExecutor) webDriver)
-			.executeScript("arguments[0].scrollIntoView({block:'center'});", row);
+				.executeScript("arguments[0].scrollIntoView({block:'center'});", row);
 
 		// 詳細ボタンをクリック
 		row.findElement(By.cssSelector("input[value='詳細']")).click();
+		visibilityTimeout(By.cssSelector("h2"), 5);
 		// 遷移先の検証
 		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
 		assertTrue(webDriver.getCurrentUrl().contains("/section/detail"));
-		
-		getEvidence(new Object() {
-		});
+
+		//		getEvidence(new Object() {
+		//		});
 	}
 
 	@Test
@@ -106,9 +107,9 @@ public class Case07 {
 		visibilityTimeout(By.cssSelector("h2"), 5);
 		assertEquals("レポート登録 | LMS", webDriver.getTitle());
 		assertTrue(webDriver.getCurrentUrl().contains("/report/regist"));
-		
-		getEvidence(new Object() {
-		});
+
+		//		getEvidence(new Object() {
+		//		});
 	}
 
 	@Test
@@ -117,19 +118,19 @@ public class Case07 {
 	void test05() {
 		// 報告内容を入力
 		webDriver.findElement(By.cssSelector("textarea.form-control")).sendKeys("テスト");
-		
+
 		// 提出ボタンをクリック
 		webDriver.findElement(By.cssSelector("button[type='submit']")).click();
 		//遷移先の検証
 		visibilityTimeout(By.cssSelector("h2"), 5);
 		assertEquals("セクション詳細 | LMS", webDriver.getTitle());
-		
-		WebElement report =webDriver.findElement(
+
+		WebElement report = webDriver.findElement(
 				By.cssSelector("input[value='提出済み日報【デモ】を確認する']"));
 		assertTrue(report.isDisplayed());
-		
-		getEvidence(new Object() {
-		});
+
+		//		getEvidence(new Object() {
+		//		});
 	}
 
 }
