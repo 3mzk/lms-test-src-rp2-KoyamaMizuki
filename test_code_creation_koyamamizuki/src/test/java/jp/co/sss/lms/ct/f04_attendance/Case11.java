@@ -10,9 +10,15 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト 勤怠管理機能
@@ -71,9 +77,13 @@ public class Case11 {
 	@DisplayName("テスト03 上部メニューの「勤怠」リンクから勤怠管理画面に遷移")
 	void test03() {
 		webDriver.findElement(By.linkText("勤怠")).click();
-
-		visibilityTimeout(By.name("punchIn"), 5);
-
+		// アラートでOK選択
+		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
+		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+		alert.accept();
+		// 待機処理
+		visibilityTimeout(By.cssSelector("h2"), 5);
+		assertEquals("勤怠情報変更｜LMS", webDriver.getTitle());
 		getEvidence(new Object() {
 		});
 
@@ -97,19 +107,30 @@ public class Case11 {
 	@DisplayName("テスト05 すべての研修日程の勤怠情報を正しく更新し勤怠管理画面に遷移")
 	void test05() {
 		// 空文字””をプルダウン選択
-		WebElement selectElement = webDriver.findElement(By.name("attendanceList[0].punchIn"));
+		WebElement selectElement = webDriver.findElement(By.name("attendanceList[1].trainingStartTimeHour"));
 		Select select = new Select(selectElement);
-		select.selectByValue("09:00");
-		
-		selectElement = webDriver.findElement(By.name("attendanceList[0].punchOut"));
+		// 出勤時間を9:00にプルダウン選択
+		select.selectByValue("9");
+		 selectElement = webDriver.findElement(By.name("attendanceList[1].trainingStartTimeMinute"));
+		 select = new Select(selectElement);
+		select.selectByValue("0");
+		// 退勤時間を18:00にプルダウン選択
+		 
+		selectElement = webDriver.findElement(By.name("attendanceList[1].trainingEndTimeHour"));
 		select = new Select(selectElement);
-		select.selectByValue("18:00");
-
-		
+		select.selectByValue("18");
+		 selectElement = webDriver.findElement(By.name("attendanceList[1].trainingEndTimeMinute"));
+		 select = new Select(selectElement);
+		 select.selectByValue("0");
+		// 更新ボタンをクリック
 		webDriver.findElement(By.cssSelector("input[type='submit']")).click();
-
+		// ダイアログでOK押す
+		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
+		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+		alert.accept();
+		
 		visibilityTimeout(By.cssSelector("h2"), 5);
-		assertEquals("勤怠管理 | LMS", webDriver.getTitle());
+		assertEquals("勤怠情報変更｜LMS", webDriver.getTitle());
 
 		getEvidence(new Object() {
 		});
