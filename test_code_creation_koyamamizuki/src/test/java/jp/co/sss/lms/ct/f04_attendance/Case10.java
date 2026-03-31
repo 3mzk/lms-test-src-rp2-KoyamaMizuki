@@ -73,8 +73,12 @@ public class Case10 {
 	@DisplayName("テスト03 上部メニューの「勤怠」リンクから勤怠管理画面に遷移")
 	void test03() {
 		WebDriverUtils.webDriver.findElement(By.linkText("勤怠")).click();
+		// アラートでOK選択
+		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
+		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+		alert.accept();
 
-		WebDriverUtils.visibilityTimeout(By.name("punchIn"), 5);
+		visibilityTimeout(By.cssSelector("h2"), 5);
 		getEvidence(new Object() {
 		});
 	}
@@ -105,7 +109,7 @@ public class Case10 {
 		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
 		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
 
-		// OK押す
+		// ダイアログでOK押す
 		alert.accept();
 		visibilityTimeout(By.name("punchIn"), 5);
 		getEvidence(new Object() {
